@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route, HashRouter  } from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+import Header from "./components/Header";
+import Sidebar from "./components/Sidebar";
+import SendMail from "./components/SendMail";
+
+import Mail from "./pages/Mail";
+import Emaillist from './pages/Emaillist';
+
+import { useMailSlice } from "./context/MailSliceContext";
+
+import "./App.css";
+
+const App = () => {
+  const {isOpen} = useMailSlice();
+
+  return(
+      <>
+        <HashRouter>
+          <div className="app">
+            <Header />
+            <div className="app__body">
+              <Sidebar />
+              <Routes>
+                <Route path="/mail" element={<Mail />} />
+                <Route path="/" element={<Emaillist />} />
+              </Routes>
+            </div>
+            {isOpen && <SendMail />}
+          </div>
+        </HashRouter>
+      </>
   );
 }
 
